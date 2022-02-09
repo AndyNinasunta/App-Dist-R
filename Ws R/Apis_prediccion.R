@@ -1,12 +1,30 @@
 #* @apiTitle Prediciones
 #* @apiDescription Esta api hace predicciones de grupos de datos
 
+  
+#' @filter cors
+cors <- function(req, res) {
+  
+  res$setHeader("Access-Control-Allow-Origin", "*")
+  
+  if (req$REQUEST_METHOD == "OPTIONS") {
+    res$setHeader("Access-Control-Allow-Methods","*")
+    res$setHeader("Access-Control-Allow-Headers", req$HTTP_ACCESS_CONTROL_REQUEST_HEADERS)
+    res$status <- 200 
+    return(list())
+  } else {
+    plumber::forward()
+  }
+  
+}
+
 
 #* Prueba
 #* @param msj El mensaje 
 #* @get /echo
 
 function(msj=""){
+  cors
   list(msj = paste0("El texto dice:", msj))
 }
 
@@ -17,6 +35,7 @@ function(msj=""){
 
 function(data1="[]",dataex="[]")
 {
+  cors
   vr_dx = 0
   data1a <- jsonlite::fromJSON(data1)
   dataexa <-  jsonlite::fromJSON(dataex)
@@ -43,9 +62,11 @@ function(data1="[]",dataex="[]")
 #* @get /imagPng
 imagmiss2 <-function(data1="[]", dataex="[]", name = "")
 {
+  cors
   data1 <- jsonlite::fromJSON(data1)
   dataex <-  jsonlite::fromJSON(dataex)
   
   plot(data1, type = 'l', main = name)
-  points(dataex, type='l', col=2)
+  #points(dataex, type='l', col=2)
 }
+
