@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HomeService } from './services/home.service';
 
 @Component({
     selector: 'home',
@@ -11,10 +12,14 @@ export class HomeComponent implements OnInit {
 
     form: FormGroup;
 
+    img1:any;
+    img2:any;
+
     /**
      * Constructor
      */
-    constructor(private formBuilder: FormBuilder) { }
+    constructor(private formBuilder: FormBuilder,
+        private homeService: HomeService) { }
 
     ngOnInit() {
 
@@ -28,13 +33,31 @@ export class HomeComponent implements OnInit {
             title: ['', ],
             data1:[[],],
             data2:[[],],
-            api:['']
+            api:['1']
         });
     }
 
 
     executeApi(){
         console.log('hola');
-        console.log(this.form.value);
+
+        if(this.form.get('api').value==='1'){
+
+            console.log('Primer Api');
+
+            this.homeService.getErrorMedio([{value:'234'}])
+            .subscribe((res)=>{
+                
+            });
+
+        }else{
+            console.log('Segunda Api');
+            this.homeService.getImagPng([{value:'234'}])
+            .subscribe((res)=>{
+
+            });
+        }
+
+        
     }
 }

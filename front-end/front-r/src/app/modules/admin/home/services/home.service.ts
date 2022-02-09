@@ -11,16 +11,41 @@ export class HomeService {
   constructor(private http: HttpClient) { }
 
 
-  getImagPng(): Observable<any> {
+  getImagPng(data: any[]): Observable<any> {
+
+
+    let params = {
+
+    };
+
+    Object.assign(params, {
+      data1: data
+    })
 
     return this.http.get<any>(
-      `${environment.urlAddress}imagPng`);
+      `${environment.urlAddress}imagPng`,
+      {
+        params
+      });
   }
 
 
-  getErrorMedio(): Observable<any> {
+  getErrorMedio(data: any[]): Observable<any> {
+
+
+    let params = {
+
+    };
+
+    Object.assign(params, {
+      data1: data
+    })
+
     return this.http.get<any>(
-      `${environment.urlAddress}errorMedio`);
+      `${environment.urlAddress}errorMedio`,
+      {
+        params
+      });
   }
 
 }
